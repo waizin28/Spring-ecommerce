@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: store
+  datasource:
+    url: jdbc:mysql://localhost:3306/store?createDatabaseIfNotExist=true
+    username: root
+    password: SteveAustin316!
+
+stripe:
+  apiUrl: https://api.stripe.com
+  timeout: 1000
+  enabled: true
+  supported-currencies: USD,EUR,GBP
+
+payment-gateway: paypal
+
+mail:
+  host: https://wzl.gmail.com
+  port: 8080
