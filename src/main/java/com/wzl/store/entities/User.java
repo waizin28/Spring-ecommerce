@@ -12,6 +12,8 @@ import java.util.Set;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
+@Builder
 @Entity
 @Table(name = "users")
 public class User {
@@ -21,14 +23,34 @@ public class User {
     @Column(name = "id")
     private Long id;
 
-    @Column(nullable = false, name = "name")
+    @Column(name = "name")
     private String name;
 
-    @Column(nullable = false, name = "email")
+    @Column(name = "email")
     private String email;
 
-    @Column(nullable = false, name = "password")
+    @Column(name = "password")
     private String password;
+
+    @OneToMany(mappedBy = "user")
+    @Builder.Default
+    private List<Address> addresses = new ArrayList<>();
+
+    public void addAddress(Address address) {
+        addresses.add(address);
+        address.setUser(this);
+    }
+
+    public void removeAddress(Address address) {
+        addresses.remove(address);
+        address.setUser(null);
+    }
+
+    public void addTag(String tagName) {
+        var tag = new Tag(tagName);
+        tags.add(tag);
+        tag.getUsers().add(this);
+    }
 
     @ManyToMany
     @JoinTable(
@@ -36,29 +58,10 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
-    // @Builder.Default
+    @Builder.Default
     private Set<Tag> tags = new HashSet<>();
 
-    @OneToMany(mappedBy = "user") // a user can have many addresses
-    //@Builder.Default
-    // have to tell hibernate who is the owner of relationship
-    // since address table have user_id which contain info about user, we need to mappedBy annotation
-    private List<Address> addresses = new ArrayList<>();
-
-    public void addAddress(Address address){
-        addresses.add(address);
-        address.setUser(this);
-    }
-
-    public void removeAddress(Address address){
-        addresses.remove(address);
-        address.setUser(null);
-    }
-
-    public void addTag(String tagName){
-        var tag = new Tag(tagName);
-        tags.add(tag);
-        tag.getUsers().add(this);
-    }
+    @OneToOne(mappedBy = "user")
+    private Profile profile;
 
 }

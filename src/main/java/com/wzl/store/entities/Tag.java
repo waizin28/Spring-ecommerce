@@ -9,23 +9,24 @@ import lombok.ToString;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name = "tags")
-@NoArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
+@ToString
+@Entity
+@Table(name = "tags")
 public class Tag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private Integer id;
 
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(mappedBy = "tags") //User's class tags is the owner of this relationship
-    // @ToString.Exclude
+    @ManyToMany(mappedBy = "tags")
+    @ToString.Exclude
     private Set<User> users = new HashSet<>();
 
     public Tag(String name) {
