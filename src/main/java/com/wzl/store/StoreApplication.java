@@ -1,8 +1,7 @@
 package com.wzl.store;
 
-import com.wzl.store.entities.Profile;
-import com.wzl.store.entities.Tag;
 import com.wzl.store.entities.User;
+import com.wzl.store.repositories.UserRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -12,20 +11,15 @@ public class StoreApplication {
 
 	public static void main(String[] args) {
 		ApplicationContext context = SpringApplication.run(StoreApplication.class, args);
+		var repository = context.getBean(UserRepository.class);
 //		var user = User.builder()
 //				.name("John")
-//				.password("password")
-//				.email("john@codewithmosh.com")
+//				.email("john@gmail.com")
+//				.password("test12")
 //				.build();
-//
-//		var profile = Profile.builder()
-//				.bio("bio")
-//				.build();
-//
-//		user.setProfile(profile);
-//		profile.setUser(user);
-//
-//		System.out.println(user);
+//		repository.save(user);
+		repository.deleteById(1L);
+
 	}
 
 }
