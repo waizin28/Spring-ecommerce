@@ -54,6 +54,7 @@ public class User {
     @Builder.Default
     private Set<Tag> tags = new HashSet<>();
 
+    // default loading strategy is eager loading
     @OneToOne(mappedBy = "user")
     private Profile profile;
 
