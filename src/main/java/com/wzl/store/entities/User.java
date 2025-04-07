@@ -32,7 +32,10 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @OneToMany(mappedBy = "user")
+    // Different cascade type
+    // If do PERSIST, when save user, related entity in this case address assocaited will be saved at address db
+    // Merge for updating
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
     @Builder.Default
     private List<Address> addresses = new ArrayList<>();
 
